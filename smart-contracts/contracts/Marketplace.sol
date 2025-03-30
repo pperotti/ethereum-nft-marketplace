@@ -26,7 +26,10 @@ contract Marketplace is ERC721URIStorage, Pausable, Ownable {
     string _baseTokenURI = ""; //https://ipfs.io/ipns/k51qzi5uqu5dkug453svtp6b9dpwve0vmhbyz2yd42ft9n8xwx2hgujtdcb554";
 
     // Publishing Price 
-    uint256 _publishingPrice = 0.01 ether; // 0.001 Ether 100000
+    uint256 _publishingPrice = 0.01 ether; // 0.01 Ether 100000
+
+    // Change Status Price
+    uint256 _changeStatusPrice = 0.01 ether; // 0.01 Ether 100000
 
     // Structure for the every NFT sold by this Marketplace
     struct MarketItem{        
@@ -106,9 +109,17 @@ contract Marketplace is ERC721URIStorage, Pausable, Ownable {
     }
 
     // Change the amount of items I'm allowed to mint
-    function setPublishingPrice(uint256 _newPrice) external onlyOwner whenNotPaused {
-        require(_publishingPrice > 0, "The publishing price should be greater than zero");
+    function setPublishingPrice(uint256 _newPrice) public payable onlyOwner whenNotPaused {
+        require(msg.value >= _changeStatusPrice, "Insufficient ETH provided!");
+        require(_newPrice > 0, "The publishing price should be greater than zero");
         _publishingPrice = _newPrice;
+    }
+
+    // Change the amount of items I'm allowed to mint
+    function setChangeStatePrice(uint256 _newPrice) public payable onlyOwner whenNotPaused {
+        require(msg.value >= _changeStatusPrice, "Insufficient ETH provided!");
+        require(_newPrice > 0, "The change status price should be greater than zero");
+        _changeStatusPrice = _newPrice;
     }
 
     // Get the publishing price
@@ -116,8 +127,13 @@ contract Marketplace is ERC721URIStorage, Pausable, Ownable {
         return _publishingPrice;
     }
 
+    // Get the price to change the status
+    function getChangeStatusPrice() external view returns (uint256) {
+        return _changeStatusPrice;
+    }
+
     // Change "saleEnabled" status
-    function setSaleEnabled(uint256 _tokenId, bool _saleEnabled) public whenNotPaused {
+    function setSaleEnabled(uint256 _tokenId, bool _saleEnabled) external whenNotPaused {
         // Validate you must be the owner of the item to change it
         require(ownerOf(_tokenId) == msg.sender, "You must be the owner of this item for it to be changed");
         
