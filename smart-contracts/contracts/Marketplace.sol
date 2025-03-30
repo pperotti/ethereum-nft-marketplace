@@ -133,7 +133,7 @@ contract Marketplace is ERC721URIStorage, Pausable, Ownable {
     }
 
     // Change "saleEnabled" status
-    function setSaleEnabled(uint256 _tokenId, bool _saleEnabled) external whenNotPaused {
+    function setSaleEnabled(uint256 _tokenId, bool _saleEnabled) public whenNotPaused {
         // Validate you must be the owner of the item to change it
         require(ownerOf(_tokenId) == msg.sender, "You must be the owner of this item for it to be changed");
         
