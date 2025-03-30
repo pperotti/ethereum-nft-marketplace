@@ -99,9 +99,9 @@ contract Marketplace is ERC721URIStorage, Pausable, Ownable {
         require(_ownerOf(_tokenId) != _buyerAddress, "You are already the owner of this item");
 
         // Approve the buyer's address 
-        approve(_buyerAddress, _tokenId);
+        _approve(_buyerAddress, _tokenId, _ownerOf(_tokenId), false);
         
-        // Transfer the item to the buyer's address
+        // Transfer the item to the buyer's address        
         safeTransferFrom(_ownerOf(_tokenId), _buyerAddress, _tokenId);                
     }
 
