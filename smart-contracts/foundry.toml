@@ -1,0 +1,16 @@
+[profile.default]
+src = "contracts"
+out = "out"
+test = "test"
+libs = ["lib"]
+auto_detect_remappings = true
+remappings = [
+    "ds-test/=lib/ds-test/src/",
+    "forge-std/=lib/forge-std/src/",
+    "@openzeppelin/contracts/=lib/openzeppelin-contracts/contracts/",
+]
+ignored_error_codes = ["license", "code-size", "init-code-size"]
+ignored_warnings_from = ["test/MarketplaceTest.sol"]
+
+# See more config options https://github.com/foundry-rs/foundry/blob/master/crates/config/README.md#all-options
+# ["unreachable", "unused-return", "unused-param", "unused-var", "code-size", "shadowing", "func-mutability", "license", "pragma-solidity", "virtual-interfaces", "same-varname", "too-many-warnings", "constructor-visibility", "init-code-size", "missing-receive-ether", "unnamed-return", "transient-storage"]
