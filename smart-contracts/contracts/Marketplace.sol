@@ -29,7 +29,7 @@ contract Marketplace is ERC721URIStorage, Pausable, Ownable {
     uint256 _publishingPrice = 0.01 ether; // 0.01 Ether 100000
 
     // Change Status Price
-    uint256 _changeStatusPrice = 0.01 ether; // 0.01 Ether 100000
+    uint256 _changeStatePrice = 0.01 ether; // 0.01 Ether 100000
 
     // Structure for the every NFT sold by this Marketplace
     struct MarketItem{        
@@ -110,16 +110,16 @@ contract Marketplace is ERC721URIStorage, Pausable, Ownable {
 
     // Change the amount of items I'm allowed to mint
     function setPublishingPrice(uint256 _newPrice) public payable onlyOwner whenNotPaused {
-        require(msg.value >= _changeStatusPrice, "Insufficient ETH provided!");
+        require(msg.value >= _changeStatePrice, "Insufficient ETH provided!");
         require(_newPrice > 0, "The publishing price should be greater than zero");
         _publishingPrice = _newPrice;
     }
 
     // Change the amount of items I'm allowed to mint
     function setChangeStatePrice(uint256 _newPrice) public payable onlyOwner whenNotPaused {
-        require(msg.value >= _changeStatusPrice, "Insufficient ETH provided!");
+        require(msg.value >= _changeStatePrice, "Insufficient ETH provided!");
         require(_newPrice > 0, "The change status price should be greater than zero");
-        _changeStatusPrice = _newPrice;
+        _changeStatePrice = _newPrice;
     }
 
     // Get the publishing price
@@ -128,8 +128,8 @@ contract Marketplace is ERC721URIStorage, Pausable, Ownable {
     }
 
     // Get the price to change the status
-    function getChangeStatusPrice() external view returns (uint256) {
-        return _changeStatusPrice;
+    function getChangeStatePrice() external view returns (uint256) {
+        return _changeStatePrice;
     }
 
     // Change "saleEnabled" status
